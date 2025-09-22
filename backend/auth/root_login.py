@@ -32,7 +32,7 @@ def login_root():
         except Exception as e:
             return jsonify({'error': 'Erro interno do servidor'}), 500
     
-    return render_template('login.html')
+    return render_template('root_login.html')
 
 @app.route('/logout/root')
 @root_required

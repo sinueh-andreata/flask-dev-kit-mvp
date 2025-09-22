@@ -5,6 +5,7 @@ from core.config import app, db
 from models.models import *
 
 # importação das rotas/endpoints/APIs
+from auth.usuarios_login import *
 from user_folder.usuario import *
 from admin_folder.admin import *
 from rotas_html import *

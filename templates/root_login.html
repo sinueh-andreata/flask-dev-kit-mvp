@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Root</title>
+    <link rel="stylesheet" href="static/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Login Root</h1>
+            <p>Acesse sua conta no sistema</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <form id="loginFormRoot">
+            <div class="form-group">
+                <label>Tipo de Usuário</label>
+                <div class="user-type-selector">
+                    <div class="user-type-option">
+                        <input type="radio" id="usuario" name="userType" value="usuarios">
+                        <label for="usuario">Usuário</label>
+                    </div>
+                    <div class="user-type-option">
+                        <input type="radio" id="admin" name="userType" value="admin">
+                        <label for="admin">Admin</label>
+                    </div>
+                    <div class="user-type-option">
+                        <input type="radio" id="root" name="userType" value="root" checked>
+                        <label for="root">Root</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="nomeGroup">
+                <label for="nome">Nome de Usuário</label>
+                <div class="input-icon cpf-icon">
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome de usuário">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <div class="input-icon password-icon">
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                Entrar
+            </button>
+        </form>
+    </div>
+    <script>
+    // Redireciona ao selecionar o tipo de usuário
+    document.querySelectorAll('input[name="userType"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            if (this.checked) {
+                if (this.value === 'usuarios') {
+                    window.location.href = 'user_login.html';
+                } else if (this.value === 'admin') {
+                    window.location.href = 'admin_login.html';
+                } else if (this.value === 'root') {
+                    window.location.href = 'root_login.html';
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>
