@@ -36,6 +36,21 @@ class Admin(db.Model):
             'senha': self.senha
         })
 
+class Root(db.Model):
+    __tablename__ = 'root'
+
+    root_id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(50), nullable=False)
+    cpf = db.Column(db.String(11), unique=True, nullable=False)
+    senha = db.Column(db.String(100), nullable=False)
+
+    def json(self):
+        return jsonify({
+            'root_id': self.root_id,
+            'nome': self.nome,
+            'cpf': self.cpf,
+            'senha': self.senha
+        })
 
 class Produto(db.Model):
     __tablename__ = 'produtos'

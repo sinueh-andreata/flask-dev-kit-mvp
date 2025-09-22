@@ -2,6 +2,7 @@ from flask import jsonify, request
 from config import app, db, bcrypt, limiter
 from login import login_admin_required
 from validadores import validar_cpf, validar_senha, validar_nome
+from models import Usuarios
 
 @app.route('/criar/usuario', methods=['POST'])
 @login_admin_required
@@ -31,8 +32,6 @@ def criar_usuario():
         if validacao_senha != True:
             return validacao_senha
 
-        from models import Usuarios 
-
         if Usuarios.query.filter_by(cpf=cpf).first():
             return jsonify({'error': 'Usuário com este CPF já existe'}), 409
 
@@ -60,18 +59,17 @@ def criar_usuario():
 @login_admin_required
 def listar_usuarios():
     try:
-        from models import Usuarios
         usuarios = Usuarios.query.all()
         lista_usuarios = [usuario.json().json for usuario in usuarios]
         return jsonify(lista_usuarios), 200
     except Exception as e:
         return jsonify({'error': 'Erro ao listar usuários'}), 500
     
+
 @app.route('/usuario/<int:usuario_id>', methods=['GET'])
 @login_admin_required
 def obter_usuario(usuario_id):
     try:
-        from models import Usuarios
         usuario = Usuarios.query.get(usuario_id)
         if not usuario:
             return jsonify({'error': 'Usuário não encontrado'}), 404
@@ -79,6 +77,7 @@ def obter_usuario(usuario_id):
     except Exception as e:
         return jsonify({'error': 'Erro ao obter usuário'}), 500
     
+
 @app.route('/usuario/<int:usuario_id>', methods=['PUT'])
 @login_admin_required
 def alterar_usuario(usuario_id):
@@ -87,7 +86,6 @@ def alterar_usuario(usuario_id):
         if not data:
             return jsonify({'error': 'JSON inválido ou vazio'}), 400
         
-        from models import Usuarios
         usuario = Usuarios.query.get(usuario_id)
         if not usuario:
             return jsonify({'error': 'Usuário não encontrado'}), 404
@@ -128,7 +126,6 @@ def alterar_usuario(usuario_id):
 @login_admin_required
 def delete_usuario(usuario_id):
     try:
-        from models import Usuarios
         usuario = Usuarios.query.get(usuario_id)
         if not usuario:
             return jsonify({'error': 'Usuário não encontrado'}), 404
