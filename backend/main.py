@@ -9,9 +9,10 @@ from usuario import *
 from admin import *
 from rotas_html import *
 from root import *
+from users_padrao import criar_users_padrao
 
 with app.app_context():
      db.create_all()
-     criar_root_padrao()
+     criar_users_padrao()
 if __name__ == '__main__':
     app.run(debug=True)

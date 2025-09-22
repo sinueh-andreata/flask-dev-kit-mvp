@@ -38,24 +38,3 @@ def logout_root():
     except Exception as e:
         return jsonify({'error': 'Erro interno ao fazer logout'}), 500
 
-def criar_root_padrao():
-    """Cria usuário root padrão se não existir"""
-    try:
-        if not Root.query.first():
-            senha_hash = bcrypt.generate_password_hash('root123').decode('utf-8')
-            root = Root(nome='root', cpf='00000000000', senha=senha_hash)  # CPF válido para testes
-            db.session.add(root)
-            db.session.commit()
-            print("✅ Usuário root padrão criado:")
-            print("   Nome: root")
-            print("   CPF: 00000000000") 
-            print("   Senha: root123")
-            print("⚠️  ALTERE A SENHA APÓS O PRIMEIRO LOGIN!")
-            return True
-        else:
-            print("ℹ️  Usuário root já existe no banco de dados")
-            return False
-    except Exception as e:
-        print(f"❌ Erro ao criar usuário root: {str(e)}")
-        db.session.rollback()
-        return False
