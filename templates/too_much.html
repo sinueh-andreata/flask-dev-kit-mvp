@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ ALERTA DE SEGURANÇA ⚠️</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #ff0033;
+            font-family: 'Share Tech Mono', monospace, 'Courier New', Courier;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            animation: bgflash 1.5s infinite alternate;
+        }
+        @keyframes bgflash {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3) hue-rotate(20deg); }
+        }
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px #ff0033, 0 0 40px #fff, 0 0 2px #fff;
+            margin-bottom: 20px;
+            animation: flicker 1.2s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; text-shadow: 0 0 20px #ff0033, 0 0 40px #fff; }
+            50% { opacity: 0.7; text-shadow: 0 0 40px #ff0033, 0 0 80px #fff; }
+            100% { opacity: 1; text-shadow: 0 0 20px #ff0033, 0 0 40px #fff; }
+        }
+        .sigil {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 30px #ff0033, 0 0 10px #fff;
+            margin-bottom: 10px;
+            animation: sigilglow 2s infinite alternate;
+        }
+        @keyframes sigilglow {
+            0% { text-shadow: 0 0 10px #ff0033, 0 0 2px #fff; }
+            100% { text-shadow: 0 0 40px #ff0033, 0 0 20px #fff; }
+        }
+        p {
+            font-size: 1.3rem;
+            color: #fff;
+            background: rgba(255,0,51,0.12);
+            border: 2px solid #ff0033;
+            border-radius: 10px;
+            padding: 18px 28px;
+            box-shadow: 0 0 20px #ff0033, 0 0 2px #fff;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+        .cybersigil {
+            font-family: 'Share Tech Mono', monospace, 'Courier New', Courier;
+            font-size: 2.2rem;
+            color: #ff0033;
+            letter-spacing: 0.2em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #fff, 0 0 30px #ff0033;
+        }
+        .blink {
+            animation: blink 0.7s steps(2, start) infinite;
+        }
+        @keyframes blink {
+            to { visibility: hidden; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sigil">&#9760;&#65039;</div>
+    <h1>ACESSO BLOQUEADO</h1>
+    <p><b>Você excedeu o limite de tentativas de login!</b><br><br>
+    <span class="blink">Sua atividade foi registrada.</span><br>
+    <span style="color:#ff0033; font-weight:bold;">Atenção: Tentativas excessivas podem ser consideradas comportamento suspeito.</span><br><br>
+    Aguarde alguns minutos antes de tentar novamente.<br>
+    <span style="font-size:1.1rem;">Se não foi você, <u>altere sua senha imediatamente</u>.</span>
+    </p>
+</body>
+</html>

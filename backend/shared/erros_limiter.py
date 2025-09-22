@@ -1,6 +1,6 @@
 from core.config import app
-from flask import jsonify
+from flask import jsonify, render_template
 
 @app.errorhandler(429)
 def ratelimit_handler(e):
-    return jsonify({'success': False, 'message': 'Muitas tentativas de login. Tente novamente em instantes.'}), 429
+    return render_template('too_much.html'), 429
