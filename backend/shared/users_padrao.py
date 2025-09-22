@@ -1,5 +1,5 @@
-from models import Root, Usuarios, Admin
-from config import db, bcrypt, app
+from models.models import Root, Usuarios, Admin
+from core.config import db, bcrypt, app
 from flask import jsonify
 
 def criar_users_padrao():

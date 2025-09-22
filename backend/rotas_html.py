@@ -1,5 +1,5 @@
-from config import app, db
-from backend.auth.usuarios_login import login_usuario
+from core.config import app, db
+from auth.usuarios_login import login_usuario
 from flask import render_template, jsonify
 
 @app.route('/')

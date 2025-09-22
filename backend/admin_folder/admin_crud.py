@@ -1,8 +1,8 @@
 from flask import jsonify, request
-from config import app, db, bcrypt, limiter
-from backend.auth.usuarios_login import login_admin_required
-from validadores import validar_cpf, validar_senha, validar_nome
-from models import Usuarios
+from core.config import app, db, bcrypt, limiter
+from auth.usuarios_login import login_admin_required
+from shared.validadores import validar_cpf, validar_senha, validar_nome
+from models.models import Usuarios
 
 @app.route('/criar/usuario', methods=['POST'])
 @login_admin_required

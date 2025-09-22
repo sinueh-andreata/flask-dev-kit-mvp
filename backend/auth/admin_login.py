@@ -1,6 +1,6 @@
-from config import app, db, bcrypt
+from core.config import app, db, bcrypt
 from flask import render_template, request, jsonify, session
-from models import Admin
+from models.models import Admin
 from werkzeug.security import check_password_hash
 
 def login_admin_required(f):

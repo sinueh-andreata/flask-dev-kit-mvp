@@ -1,15 +1,15 @@
 from flask import Flask
-from config import app, db
+from core.config import app, db
 
 # importação das tabelas do banco de dados
-from models import *
+from models.models import *
 
 # importação das rotas/endpoints/APIs
-from usuario import *
-from admin import *
+from user_folder.usuario import *
+from admin_folder.admin import *
 from rotas_html import *
-from root import *
-from users_padrao import criar_users_padrao
+from root_folder.root import *
+from shared.users_padrao import criar_users_padrao
 
 with app.app_context():
      db.create_all()

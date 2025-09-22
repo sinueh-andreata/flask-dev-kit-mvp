@@ -1,6 +1,6 @@
-from config import app, db, bcrypt
+from core.config import app, db, bcrypt
 from flask import render_template, request, jsonify, session
-from models import Root
+from models.models import Root
 from werkzeug.security import check_password_hash
 
 def root_required(f):

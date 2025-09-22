@@ -1,5 +1,5 @@
 from flask import jsonify
-from config import app, db
+from core.config import app, db
 from sqlalchemy.dialects.mysql import MEDIUMBLOB
 import datetime
 

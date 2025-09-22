@@ -1,8 +1,8 @@
 from flask import jsonify, request
-from config import app, db, bcrypt, limiter
-from backend.auth.usuarios_login import root_required
-from validadores import validar_cpf, validar_senha, validar_nome
-from models import Usuarios, Admin
+from core.config import app, db, bcrypt, limiter
+from auth.usuarios_login import root_required
+from shared.validadores import validar_cpf, validar_senha, validar_nome
+from models.models import Usuarios, Admin
 
 
 def crud_usuario():
@@ -35,8 +35,6 @@ def crud_usuario():
             if validacao_senha != True:
                 return validacao_senha
 
-            from models import Usuarios 
-
             if Usuarios.query.filter_by(cpf=cpf).first():
                 return jsonify({'error': 'Usuário com este CPF já existe'}), 409
 
@@ -64,7 +62,6 @@ def crud_usuario():
     @root_required
     def listar_usuarios():
         try:
-            from models import Usuarios
             usuarios = Usuarios.query.all()
             lista_usuarios = [usuario.json().json for usuario in usuarios]
             return jsonify(lista_usuarios), 200
@@ -76,7 +73,6 @@ def crud_usuario():
     @root_required
     def obter_usuario(usuario_id):
         try:
-            from models import Usuarios
             usuario = Usuarios.query.get(usuario_id)
             if not usuario:
                 return jsonify({'error': 'Usuário não encontrado'}), 404
@@ -92,8 +88,7 @@ def crud_usuario():
             data = request.get_json()
             if not data:
                 return jsonify({'error': 'JSON inválido ou vazio'}), 400
-            
-            from models import Usuarios
+
             usuario = Usuarios.query.get(usuario_id)
             if not usuario:
                 return jsonify({'error': 'Usuário não encontrado'}), 404
@@ -134,7 +129,6 @@ def crud_usuario():
     @root_required
     def delete_usuario(usuario_id):
         try:
-            from models import Usuarios
             usuario = Usuarios.query.get(usuario_id)
             if not usuario:
                 return jsonify({'error': 'Usuário não encontrado'}), 404

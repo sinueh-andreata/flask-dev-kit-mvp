@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request, session, render_template, redirect, url_for
-from config import app, db, bcrypt
-from models import Usuarios
-from backend.auth.usuarios_login import login_usuario
-from validadores import validar_cpf
+from core.config import app, db, bcrypt
+from models.models import Usuarios
+from auth.usuarios_login import login_usuario
+from shared.validadores import validar_cpf
 
 @app.route('/login/usuarios', methods=['POST'])
 def login_usuarios():
