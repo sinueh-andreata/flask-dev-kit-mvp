@@ -1,8 +1,9 @@
-from core.config import app, db, bcrypt
+from core.config import app, db, bcrypt, limiter
 from flask import render_template, request, jsonify, session, redirect, url_for
 from models.models import Usuarios
 from werkzeug.security import check_password_hash
 from shared.validadores import validar_cpf
+from shared.erros_limiter import ratelimit_handler
 from functools import wraps
 
 @app.route('/login', methods=['GET'])
@@ -20,6 +21,7 @@ def login_usuario(f):
     return wrapper
 
 @app.route('/login/usuarios', methods=['POST'])
+@limiter.limit("10 per minute")
 def login_usuarios():
     if request.method == 'POST':
         try:
@@ -43,7 +45,7 @@ def login_usuarios():
                 session['cpf'] = usuario.cpf
                 session['tipo'] = 'usuario'
                 session['nome'] = usuario.nome
-                return jsonify({'success': True, 'message': 'Login feito com sucesso'}), 200
+                return render_template('user_dashboard.html')
             else:
                 return jsonify({'success': False, 'message': 'Usuário ou senha inválidos'}), 401
         except Exception as e:
