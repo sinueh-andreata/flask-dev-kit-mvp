@@ -20,7 +20,7 @@ TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), '..', 'templates')
 app = Flask(__name__, template_folder=TEMPLATE_DIR)
 
 # configs
-app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SECURE'] = False  # mudar para True em produção
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
