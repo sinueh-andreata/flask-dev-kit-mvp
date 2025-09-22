@@ -147,7 +147,6 @@ def crud_usuario():
             return jsonify({'error': 'Erro ao deletar usuário'}), 500
         
 
-
 def crud_admin():
     @app.route('/criar/admin', methods=['POST'])
     @root_required
