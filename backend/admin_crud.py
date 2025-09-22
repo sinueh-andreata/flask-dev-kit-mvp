@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from config import app, db, bcrypt, limiter
-from login import login_admin_required
+from backend.auth.usuarios_login import login_admin_required
 from validadores import validar_cpf, validar_senha, validar_nome
 from models import Usuarios
 

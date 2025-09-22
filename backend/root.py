@@ -1,7 +1,7 @@
 from flask import jsonify, request, session, render_template, redirect, url_for
 from config import app, db, bcrypt
 from models import Root
-from login import root_required
+from backend.auth.usuarios_login import root_required
 
 @app.route('/login/root', methods=['GET', 'POST'])
 def login_root():

@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, session, render_template, redirect, url_for
 from config import app, db, bcrypt
 from models import Admin
-from login import login_admin_required
+from backend.auth.usuarios_login import login_admin_required
 
 @app.route('/login/admin', methods=['GET', 'POST'])
 def login_admin():
