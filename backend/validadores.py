@@ -21,7 +21,6 @@ def validar_cpf(cpf):
 
     return cpf[-2:] == f"{digito1}{digito2}"
 
-
 def validar_cnpj(cnpj):
     cnpj = re.sub(r'[^\d]', '', cnpj)
     if not re.match(r'^\d{14}$', cnpj):
@@ -98,7 +97,7 @@ def validar_senha(senha):
     return True
 
 def validar_nome(nome):
-    
+
     # nome = nome.upper() # Converte para maiúsculas IGNORE
     if not re.match(r'^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$', nome):
         return jsonify({"error": "Nome deve conter apenas letras e espaços"}), 400
