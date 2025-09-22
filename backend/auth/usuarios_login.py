@@ -1,15 +1,16 @@
-from core.config import app, db, bcrypt
-from flask import render_template, request, jsonify, session
+from core.config import app, db, bcrypt, limiter
+from flask import render_template, request, jsonify, session, redirect, url_for
 from models.models import Usuarios
 from werkzeug.security import check_password_hash
 from shared.validadores import validar_cpf
+from shared.erros_limiter import ratelimit_handler
 from functools import wraps
 
 @app.route('/login', methods=['GET'])
 @app.route('/', methods=['GET'])
 def login_page():
     """Rota principal de login"""
-    return render_template('login.html')
+    return render_template('user_login.html')
 
 def login_usuario(f):
     @wraps(f)
@@ -19,37 +20,40 @@ def login_usuario(f):
         return f(*args, **kwargs)
     return wrapper
 
-@app.route('/login/usuarios', methods=['GET', 'POST'])
+@app.route('/login/usuarios', methods=['POST'])
+@limiter.limit("10 per minute")
 def login_usuarios():
     if request.method == 'POST':
         try:
             cpf = request.form.get('cpf')
+            nome = request.form.get('nome')
             senha = request.form.get('senha')
-            
-            if not cpf or not senha:
-                return jsonify({'success': False, 'message': 'CPF e senha são obrigatórios'}), 400
-            
-            # Validar CPF
-            if not validar_cpf(cpf):
-                return jsonify({'success': False, 'message': 'CPF inválido'}), 400
-            
-            # Limpar CPF (remover pontos e hífen)
-            cpf_limpo = cpf.replace('.', '').replace('-', '')
-            
-            usuario = Usuarios.query.filter_by(cpf=cpf_limpo).first()
+
+            if not senha or (not cpf and not nome):
+                return jsonify({'success': False, 'message': 'Informe CPF ou nome e a senha'}), 400
+
+            usuario = None
+            if cpf:
+                if not validar_cpf(cpf):
+                    return jsonify({'success': False, 'message': 'CPF inválido'}), 400
+                cpf_limpo = cpf.replace('.', '').replace('-', '')
+                usuario = Usuarios.query.filter_by(cpf=cpf_limpo).first()
+            elif nome:
+                usuario = Usuarios.query.filter_by(nome=nome).first()
+
             if usuario and bcrypt.check_password_hash(usuario.senha, senha):
                 session['cpf'] = usuario.cpf
                 session['tipo'] = 'usuario'
                 session['nome'] = usuario.nome
-                return jsonify({'success': True, 'message': 'Login feito com sucesso'}), 200
+                return render_template('user_dashboard.html')
             else:
-                return jsonify({'success': False, 'message': 'CPF ou senha inválidos'}), 401
+                return jsonify({'success': False, 'message': 'Usuário ou senha inválidos'}), 401
         except Exception as e:
             return jsonify({'success': False, 'message': 'Erro interno do servidor'}), 500
-    
-    return render_template('login.html')
 
-@app.route('/logout/usuarios')
+    return render_template('user_login.html')
+
+@app.route('/logout/usuarios', methods=['POST'])
 @login_usuario
 def logout_usuarios():
     try:
@@ -57,8 +61,10 @@ def logout_usuarios():
             session.pop('cpf', None)
             session.pop('tipo', None)
             session.pop('nome', None)
-            return jsonify({'success': True, 'message': 'Logout feito com sucesso'}), 200
+            return redirect(url_for('login_page'))
         else:
-            return jsonify({'success': False, 'message': 'Nenhuma sessão ativa encontrada'}), 400
+            return redirect(url_for('login_page'))
     except Exception as e:
-        return jsonify({'success': False, 'message': 'Erro interno ao fazer logout'}), 500
+        return redirect(url_for('login_page'))
+    
+

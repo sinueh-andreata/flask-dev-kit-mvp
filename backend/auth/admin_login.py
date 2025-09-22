@@ -26,7 +26,7 @@ def login_admin():
         else:
             return jsonify({'aviso': 'Login ou senha inválidos'}), 401
     
-    return render_template('login.html')
+    return render_template('admin_login.html')
 
 @app.route('/logout')
 @login_admin_required
