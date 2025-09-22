@@ -19,7 +19,7 @@ def login_usuario(f):
         return f(*args, **kwargs)
     return wrapper
 
-@app.route('/login/usuarios', methods=['GET', 'POST'])
+@app.route('/login/usuarios', methods=['POST'])
 def login_usuarios():
     if request.method == 'POST':
         try:
@@ -66,7 +66,3 @@ def logout_usuarios():
         return redirect(url_for('login_page'))
     
 
-@app.route('/user_dashboard.html')
-@login_usuario
-def user_dashboard_html():
-    return render_template('user_dashboard.html')
