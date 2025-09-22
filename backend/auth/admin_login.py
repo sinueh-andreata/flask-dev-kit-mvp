@@ -21,6 +21,7 @@ def login_admin():
         if admin and bcrypt.check_password_hash(admin.senha, senha):
             session['cpf'] = admin.cpf
             session['tipo'] = 'admin'
+            session['nome'] = admin.nome
             return jsonify({'aviso': 'Login feito com sucesso'}), 200
         else:
             return jsonify({'aviso': 'Login ou senha inválidos'}), 401

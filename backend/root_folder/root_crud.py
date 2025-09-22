@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from core.config import app, db, bcrypt, limiter
-from auth.usuarios_login import root_required
+from auth.root_login import root_required
 from shared.validadores import validar_cpf, validar_senha, validar_nome
 from models.models import Usuarios, Admin
 

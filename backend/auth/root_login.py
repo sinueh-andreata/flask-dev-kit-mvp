@@ -25,6 +25,7 @@ def login_root():
             if root and bcrypt.check_password_hash(root.senha, senha):
                 session['cpf'] = root.cpf
                 session['tipo'] = 'root'
+                session['nome'] = root.nome
                 return jsonify({'message': 'Login feito com sucesso'}), 200
             else:
                 return jsonify({'error': 'Login ou senha inválidos'}), 401
